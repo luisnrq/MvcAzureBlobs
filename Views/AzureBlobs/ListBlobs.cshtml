@@ -1,0 +1,46 @@
+﻿@model List<BlobClass>
+
+<h1 style="color:blue">
+    Listado de Blobs: @ViewData["CONTAINERNAME"]
+</h1>
+
+<a asp-controller="AzureBlobs"
+   asp-action="Index">
+    Volver a Containers
+</a>
+
+<a asp-controller="AzureBlobs"
+   asp-action="UploadBlob"
+   asp-route-containerName="@ViewData["CONTAINERNAME"]"
+   class="btn btn-info">
+    Upload Blob
+</a>
+
+<table class="table table-active">
+    <thead>
+        <tr>
+            <th>Nombre Blob</th>
+            <th>Imagen</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (BlobClass blob in Model)
+        {
+            <tr>
+                <td>@blob.Nombre</td>
+                <td>
+                    <img src="@blob.Url" style="width: 150px; height: 150px" />
+                </td>
+                <td>
+                    <a asp-controller="AzureBlobs"
+                       asp-action="DeleteBlob"
+                       asp-route-containerName="@ViewData["CONTAINERNAME"]"
+                       asp-route-blobName="@blob.Nombre" class="btn btn-danger">
+                        Delete Blob
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
